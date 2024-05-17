@@ -76,9 +76,9 @@ resource "aws_secretsmanager_secret_version" "document_db_credentials_version" {
   secret_string = jsonencode({
     username = random_string.username.result
     password = random_string.password.result
-    endpoint = aws_docdb_cluster_instance.cluster_instace.endpoint
-    port = aws_docdb_cluster_instance.cluster_instace.port
-    url = "mongodb://${random_string.username.result}:${local.encoded_password}@${aws_docdb_cluster_instance.cluster_instace.endpoint}:${aws_docdb_cluster_instance.cluster_instace.port}/${aws_db_instance.postgresdb.db_name}"
+    endpoint = aws_docdb_cluster_instance.cluster_instance.endpoint
+    port = aws_docdb_cluster_instance.cluster_instance.port
+    url = "mongodb://${random_string.username.result}:${local.encoded_password}@${aws_docdb_cluster_instance.cluster_instance.endpoint}:${aws_docdb_cluster_instance.cluster_instance.port}/${aws_db_instance.postgresdb.db_name}"
   })
 }
 
