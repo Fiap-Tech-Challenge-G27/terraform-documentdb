@@ -76,9 +76,9 @@ resource "aws_secretsmanager_secret_version" "document_db_credentials_version" {
   secret_string = jsonencode({
     username = random_string.username.result
     password = random_string.password.result
-    endpoint = aws_docdb_cluster_instance.cluster_instance.endpoint
-    port = aws_docdb_cluster_instance.cluster_instance.port
-    url = "mongodb://${random_string.username.result}:${local.encoded_password}@${aws_docdb_cluster_instance.cluster_instance.endpoint}:${aws_docdb_cluster_instance.cluster_instance.port}/${aws_db_instance.postgresdb.db_name}"
+    endpoint = aws_docdb_cluster_instance.cluster_instance[0].endpoint
+    port = aws_docdb_cluster_instance.cluster_instance[0].port
+    url = "mongodb://${random_string.username.result}:${local.encoded_password}@${aws_docdb_cluster_instance.cluster_instance[0].endpoint}:${aws_docdb_cluster_instance.cluster_instance[0].port}/app"
   })
 }
 
@@ -91,7 +91,7 @@ resource "aws_docdb_cluster" "docdb" {
 
 resource "aws_docdb_cluster_instance" "cluster_instance" {
   count              = 1
-  identifier         = "techchallenge-instance"
+  identifier         = "techchallenge-instance-${count.index}"
   cluster_identifier = aws_docdb_cluster.docdb.id
   instance_class     = "db.t3.medium"
 }
