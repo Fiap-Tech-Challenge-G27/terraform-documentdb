@@ -57,25 +57,25 @@ jobs:
     - name: Terraform apply
       run: terraform apply -auto-approve
 
-    - name: Retrieve DocumentDB credentials from Secrets Manager
-      id: get-secrets
-      run: |
-        secrets=$(aws secretsmanager get-secret-value --secret-id documentdbcredentials --query SecretString --output text)
-        echo "DOCDB_CREDENTIALS<<EOF" >> $GITHUB_ENV
-        echo $secrets >> $GITHUB_ENV
-        echo "EOF" >> $GITHUB_ENV
+    # - name: Retrieve DocumentDB credentials from Secrets Manager
+    #   id: get-secrets
+    #   run: |
+    #     secrets=$(aws secretsmanager get-secret-value --secret-id documentdbcredentials --query SecretString --output text)
+    #     echo "DOCDB_CREDENTIALS<<EOF" >> $GITHUB_ENV
+    #     echo $secrets >> $GITHUB_ENV
+    #     echo "EOF" >> $GITHUB_ENV
 
-    - name: Install MongoDB Shell
-      run: |
-        wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
-        echo "deb http://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
-        sudo apt-get update
-        sudo apt-get install -y mongodb-org-shell
+    # - name: Install MongoDB Shell
+    #   run: |
+    #     wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
+    #     echo "deb http://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+    #     sudo apt-get update
+    #     sudo apt-get install -y mongodb-org-shell
 
-    - name: Create databases in DocumentDB
-      run: |
-        endpoint=$(echo $DOCDB_CREDENTIALS | jq -r .endpoint)
-        username=$(echo $DOCDB_CREDENTIALS | jq -r .username)
-        password=$(echo $DOCDB_CREDENTIALS | jq -r .password)
-        port=$(echo $DOCDB_CREDENTIALS | jq -r .port)
-        mongo --host $endpoint:$port --username $username --password $password --eval 'db.getSiblingDB("dbclientes").createCollection("clientes"); db.getSiblingDB("dbpedidos").createCollection("pedidos");'
+    # - name: Create databases in DocumentDB
+    #   run: |
+    #     endpoint=$(echo $DOCDB_CREDENTIALS | jq -r .endpoint)
+    #     username=$(echo $DOCDB_CREDENTIALS | jq -r .username)
+    #     password=$(echo $DOCDB_CREDENTIALS | jq -r .password)
+    #     port=$(echo $DOCDB_CREDENTIALS | jq -r .port)
+    #     mongo --host $endpoint:$port --username $username --password $password --eval 'db.getSiblingDB("dbclientes").createCollection("clientes"); db.getSiblingDB("dbpedidos").createCollection("pedidos");'
