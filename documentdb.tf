@@ -109,3 +109,7 @@ resource "aws_iam_policy" "secretsPolicy" {
     ]
   })
 }
+
+output "secrets_policy" {
+  value = aws_iam_policy.secretsPolicy.arn
+}
