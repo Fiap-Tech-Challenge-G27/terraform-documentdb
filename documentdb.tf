@@ -95,3 +95,17 @@ resource "aws_docdb_cluster_instance" "cluster_instance" {
   cluster_identifier = aws_docdb_cluster.docdb.id
   instance_class     = "db.t3.medium"
 }
+
+resource "aws_iam_policy" "secretsPolicy" {
+  name   = "documentdb-secrets-policy"
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action   = ["secretsmanager:GetSecretValue", "secretsmanager:DescribeSecret"]
+        Resource = [aws_secretsmanager_secret.document_db_credentials.arn]
+      },
+    ]
+  })
+}
