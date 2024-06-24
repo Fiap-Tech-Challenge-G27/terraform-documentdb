@@ -115,6 +115,7 @@ resource "aws_docdb_cluster" "docdb" {
   master_username         = random_string.username.result
   master_password         = random_string.password.result
   vpc_security_group_ids       = [aws_security_group.docdb_sg.id]
+  skip_final_snapshot     = true
 }
 
 resource "aws_docdb_cluster_instance" "cluster_instance" {
