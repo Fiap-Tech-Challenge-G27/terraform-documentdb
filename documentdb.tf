@@ -71,7 +71,8 @@ locals {
 }
 
 resource "aws_secretsmanager_secret" "document_db_credentials" {
-  name        = "documentdbcredentials"
+  name        = "documentdbcredentialsv2"
+  recovery_window_in_days = 0
 }
 
 resource "aws_secretsmanager_secret_version" "document_db_credentials_version" {
