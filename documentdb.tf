@@ -29,31 +29,6 @@ provider "aws" {
   region = "us-east-1"
 }
 
-resource "aws_default_vpc" "vpcTechChallenge" {
-  tags = {
-    Name = "Default VPC to Tech Challenge"
-  }
-}
-
-resource "aws_default_subnet" "subnetTechChallenge" {
-  availability_zone = "us-east-1a"
-
-  tags = {
-    Name = "Default subnet for us-east-1a to Tech Challenge",
-    "kubernetes.io/role/elb" = "1"
-  }
-}
-
-resource "aws_default_subnet" "subnetTechChallenge2" {
-  availability_zone = "us-east-1b"
-
-  tags = {
-    Name = "Default subnet for us-east-1b to Tech Challenge",
-    "kubernetes.io/role/elb" = "1"
-  }
-}
-
-
 resource "random_string" "username" {
   length  = 16
   special = false
@@ -89,7 +64,7 @@ resource "aws_security_group" "docdb_sg" {
   name        = "docdb-security-group"
   description = "Security group para o cluster DocumentDB"
 
-  vpc_id = aws_default_vpc.vpcTechChallenge.id
+  vpc_id = data.aws_vpc.selected.id
 
   # Regras de entrada permitindo tráfego da própria VPC
   ingress {
