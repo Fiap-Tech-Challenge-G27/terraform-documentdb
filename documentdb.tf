@@ -71,7 +71,7 @@ resource "aws_security_group" "docdb_sg" {
     from_port   = 27017
     to_port     = 27017
     protocol    = "tcp"
-    cidr_blocks = [aws_default_vpc.vpcTechChallenge.cidr_block]
+    cidr_blocks = [data.aws_vpc.selected.cidr_block]
   }
 
   # Regra de saída permitindo tráfego para a própria VPC
