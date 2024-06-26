@@ -31,7 +31,7 @@ provider "aws" {
 
 resource "aws_default_vpc" "vpcTechChallenge" {
   tags = {
-    Name = "Default VPC to Tech Challenge"
+    Name = "Default VPC to Tech Challenge 5"
   }
 }
 
