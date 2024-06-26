@@ -63,7 +63,7 @@ resource "aws_secretsmanager_secret_version" "document_db_credentials_version" {
 
 resource "aws_security_group" "docdb_sg" {
   name        = "docdb-security-group"
-  description = "Security group para o cluster DocumentDB"
+  description = "Security group para o cluster Document DB"
 
   vpc_id = data.aws_vpc.selected.id
 
