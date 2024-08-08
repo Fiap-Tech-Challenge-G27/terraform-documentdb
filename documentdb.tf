@@ -30,7 +30,7 @@ provider "aws" {
 }
 
 resource "random_string" "username" {
-  length  = 16
+  length  = 14 
   special = false
   upper   = true
 }
